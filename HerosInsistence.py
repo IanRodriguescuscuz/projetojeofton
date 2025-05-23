@@ -67,12 +67,12 @@ def evento_1():
 def cogumelo_efeito(decisão):
     if decisão in ["sim", "s", "comer", "vamo", "vamos", "claro", "bora", "yes"]:
         efeitodocogumelo = randint(1,5)
-        if efeitodocogumelo >= 2:
+        if efeitodocogumelo >= 3:
             print("Você come o cogumelo... e é muito saboroso 🍄✨")
             aventureiro["vida"] += 20
             aventureiro["mana"] += 20
             print("Você recuperou 20 de vida e mana!")
-        elif efeitodocogumelo <= 1:
+        elif efeitodocogumelo <= 2:
             print("Que cogumelho horrivel! Você não deveria comer tudo que encontra no chão!, Você perde 20 pontos de vida")
             aventureiro["vida"] -= 20
     else:
@@ -108,14 +108,12 @@ def evento_10():
 def evento_11():
     print("Você acha um artefato antigo e poderoso!")
 
-evento_1()
-
 eventos = [evento_1, evento_2, evento_3, evento_4, evento_5, evento_6, evento_7, evento_8, evento_9, evento_10, evento_11]
 def evento_na_caverna():
-    evento_escolhido = randint(1,10)
+    evento_escolhido = randint(0,10)
     eventos[evento_escolhido]()
 
-
+evento_1()
 
 print({aventureiro["dano"],aventureiro["vida"]})
-print(contador_de_eventos)
+print(f"Você já percorreu {contador_de_eventos} câmaras")
