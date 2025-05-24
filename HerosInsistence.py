@@ -20,10 +20,15 @@ YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
                      hero's insistence
                           ~ O Rpg """)
 
-
+def quer_dizer_sim(resposta):
+    resposta = resposta.strip().lower()
+    return resposta in [
+        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly"
+    ]
+    
 def perguntar_se_quer_jogar():
     resposta = input("\n\n                Vamos entrar nesta caverna? > ").strip().lower()
-    return resposta in ["sim", "s", "aventura", "vamo", "vamos", "claro", "bora"]
+    return quer_dizer_sim(resposta)
 
 
 def perguntar_nome():
@@ -38,14 +43,20 @@ def perguntar_nome():
 
 tela_inicial()
 
+def status():
+    print(f"""
+    ---- Status ----
+    Nome: {aventureiro['nome']}
+    Vida: {aventureiro['vida']}/{aventureiro['vidamaxima']}
+    Mana: {aventureiro['mana']}/{aventureiro['manamaxima']}
+    Dano: {aventureiro['dano']}
+    XP: {aventureiro['exp']} / {aventureiro['expmaximo']}
+    ----------------
+    """)
+
 if perguntar_se_quer_jogar():
     nome = perguntar_nome()
-    aventureiro = {"nome": nome}
-    print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa agora...\n")
-else:
-    print("\nTudo bem, quem sabe em outra hora. A caverna espera...\n")
-
-aventureiro = {"nome": nome,
+    aventureiro = {"nome": nome,
                "dano": 10,
                "vida": 100,
                "vidamaxima":100,
@@ -53,6 +64,11 @@ aventureiro = {"nome": nome,
                "expmaximo":100,
                "mana":50,
                "manamaxima":50}
+    print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa agora...\n")
+else:
+    print("\nTudo bem, quem sabe em outra hora. A caverna espera...\n")
+    exit()
+
 goblim = {
     "nome":"goblim traiçoeiro",
     "dano": 20,
@@ -63,7 +79,7 @@ goblim = {
 contador_de_eventos = 0
 
 def ganhar_xp(npc):
-    print("/n /n A Batalha foi árdua, mas a experança de achar uma saída segue crescente. /n /n")
+    print("\n\nA Batalha foi árdua, mas a esperança de achar uma saída segue crescente.\n\n")
     print(f"\nVocê derrotou {npc['nome']} e ganhou {npc['exp']} de experiência!")
 
     aventureiro["exp"] += npc["exp"]
@@ -100,15 +116,20 @@ def batalha(npc):
         npc["vida"] -= aventureiro["dano"]
         print(f"Você ataca e causa {aventureiro['dano']} no {npc['nome']}!")
         aventureiro["vida"] -= npc["dano"]
-        print(f"O {npc['nome']} revida e causa {npc['dano']}!")
+        if npc["vida"] > 0:
+            aventureiro["vida"] -= npc["dano"]
+            print(f"O {npc['nome']} revida e causa {npc['dano']}!")
+        else:
+            print(f"O {npc['nome']} foi derrotado!")
 
     ações_na_batalha = {
         "exura": exura,
         "atacar": atacar,
+        "status": status
     }
 
     while aventureiro["vida"] > 0 and npc["vida"] > 0:
-        ação = input("\nO que você vai fazer? > ").strip().lower()
+        ação = input("\nO que você vai fazer? > [Exura / Atacar / Status] ").strip().lower()
         if ação in ações_na_batalha:
             ações_na_batalha[ação]()
         else:
@@ -121,10 +142,10 @@ def evento_1():
     decisão = input("\n\n                comer? > ").strip().lower()
     contador_de_eventos += 1
     cogumelo_efeito(decisão)
-    return decisão in ["sim", "s", "comer", "vamo", "vamos", "claro", "bora","yes"]
+    return quer_dizer_sim(decisão)
 
 def cogumelo_efeito(decisão):
-    if decisão in ["sim", "s", "comer", "vamo", "vamos", "claro", "bora", "yes"]:
+    if quer_dizer_sim(decisão):
         efeitodocogumelo = randint(1,5)
         if efeitodocogumelo >= 3:
             print("Você come o cogumelo... e é muito saboroso 🍄✨")
@@ -184,18 +205,19 @@ def evento_10():
     print("Voce percorre por um caminho estreito, longo e apertado. . .")
     decisao = input("\n\nVocê chega em área aberta, com um poço de água à sua esquerda, você está cansado. . . você imediatamente sente sede. . .,\n\n\ndeseja beber da água? > ").strip().lower()
     beber_agua(decisao)
-    return decisao in ["sim", "s", "comer", "vamo", "vamos", "claro", "bora","yes"]
+    return quer_dizer_sim(decisao)
 
 def beber_agua(decisao):
-    if decisao in ["sim", "s", "comer","beber", "vamo", "vamos", "claro", "bora", "yes"]:
+    if quer_dizer_sim(decisao):
         print("""
               \n\n\nVocê começa a sentir um mal-estar, você cambalea e começa a perder o equilíbrio, voce procura um local de apoio, porém acaba caindo e perdendo a consciência. . .\n\n\nAo acordar, você nota que suas mãos estão amarradas, ao olhar a o redor, uma figura pequena, feia e nojenta com uma faca em sua cintura te encara de olhos abertos e salivando pela boca. . .\n\n\n
             
               """)
         goblin()
     else:
-        print("tchau")
-        evento_na_caverna()
+        print("\n\n\nApesar da sede, você ignora o poço, após uma longa caminhada voce se depara com uma estrutura relativamente pequena, talvez seria possivel que uma crianca morasse ai, mas o que uma crianca estaria fazendo dentro dessa casa voce se pergunta\n\n\nDe repente, vindo da sua esquerda, uma criatura pequena e rapida com a faca em sua direcao avanca, voce consegue desviar!")
+        batalha(goblim)
+       
 
 
 def goblin():
@@ -247,5 +269,6 @@ def evento_na_caverna():
 evento_1()
 evento_10()
 
-#print({aventureiro["dano"],aventureiro["vida"]})
+
+print(f"Dano: {aventureiro['dano']} | Vida: {aventureiro['vida']}")
 print(f"Você já percorreu {contador_de_eventos} câmara(s)")
