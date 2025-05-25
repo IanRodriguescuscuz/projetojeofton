@@ -23,7 +23,7 @@ YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
 def quer_dizer_sim(resposta):
     resposta = resposta.strip().lower()
     return resposta in [
-        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly, continuar, pegar, ir, entrar, cogumelo"
+        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo"
     ]
     
 def perguntar_se_quer_jogar():
@@ -526,5 +526,7 @@ def evento_na_caverna():
     eventos[evento_escolhido]()
 
 #área de teste de eventos
+#evento_1()
 evento_6()
+evento_10()
 print(f"Dano: {aventureiro['dano']} | Vida: {aventureiro['vida']}")
