@@ -23,7 +23,7 @@ YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
 def quer_dizer_sim(resposta):
     resposta = resposta.strip().lower()
     return resposta in [
-        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly, continuar, pegar, ir, entrar, cogumelo"
+        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo"
     ]
     
 def perguntar_se_quer_jogar():
