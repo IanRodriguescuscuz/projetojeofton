@@ -23,7 +23,7 @@ YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
 def quer_dizer_sim(resposta):
     resposta = resposta.strip().lower()
     return resposta in [
-        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo"
+        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo", "sm", "simm","go","sin",
     ]
     
 def perguntar_se_quer_jogar():
@@ -64,7 +64,7 @@ if perguntar_se_quer_jogar():
                "expmaximo":100,
                "mana":50,
                "manamaxima":50,
-               "manaregen": 3}
+               "manaregen": 5}
     print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa agora...\n")
 else:
     print("\nTudo bem, quem sabe em outra hora. A caverna espera...\n")
@@ -74,7 +74,7 @@ goblim = {
     "nome":"goblim traiçoeiro",
     "dano": 20,
     "vida": 50,
-    "exp":20,
+    "exp":30,
 }
 
 morcego_gigante = {
@@ -82,7 +82,7 @@ morcego_gigante = {
     "nome":"morcego gigante",
     "dano": 10,
     "vida": 40,
-    "exp":15,
+    "exp":20,
 
 }
 
@@ -101,6 +101,28 @@ lagarto_das_cavernas = {
     "vida": 60,
     "exp":50,
 
+}
+
+coelho_agressivo = {
+    "nome":"coelho agressivo",
+    "dano": 0,
+    "vida": 10,
+    "exp":5,
+
+}
+
+lobo_faminto = {
+    "nome":"Lobo faminto",
+    "dano": 10,
+    "vida": 25,
+    "exp":15,
+}
+
+lobo_alfa = {
+    "nome":"Lobo ALFA",
+    "dano": 15,
+    "vida": 40,
+    "exp":30,
 }
 
 contador_de_eventos = 0
@@ -223,6 +245,10 @@ def batalha(npc):
         else:
             print("Você não tem mana suficiente!")
 
+    def magia():
+        print(""">>> Magias possuem palavras mágicas.
+                     as diga e elas aconteceram!  <<<""")
+
         
             
     def atacar():
@@ -244,10 +270,12 @@ def batalha(npc):
         "exori utamo": exori_utamo,
         "utito san": utito_san,
         "exori vis": exori_vis,
+        "magia":magia,
     }
 
     while aventureiro["vida"] > 0 and npc["vida"] > 0:
-        ação = input("\nO que você vai fazer? > [Magia / Atacar / Status] ").strip().lower()
+        ação = input("\nO que você vai fazer? > [Magia / Atacar / Status] >> ").strip().lower()
+        print("\n")
         if ação in ações_na_batalha:
             ações_na_batalha[ação]()
         else:
@@ -301,7 +329,7 @@ def evento_3():
     contador_de_eventos += 1
     print("Você escorrega em uma pedra Perigosamente escorregadia e pontuda!\n")
     
-    comando = input("Você lembra de algo que pode te tirar de armadilhas? oque fazer?> ").strip().lower()
+    comando = input("há uma magia que te protegeria nessa situação. Oque fazer?> ").strip().lower()
     
     if comando == "utani hur":
         if aventureiro["mana"] >= 5:
@@ -434,14 +462,38 @@ def enfrentar_lagarto():
 
 
 def evento_7():
-    global contador_de_eventos 
+    global contador_de_eventos
     contador_de_eventos += 1
-    print("Um eco estranho preenche a caverna.")
+    print("\n Você segue até que...Um coelho agressivo avança contra você!")
+    batalha(coelho_agressivo)
+    verificar_morte()
+    ganhar_xp(coelho_agressivo)
+    coelho_agressivo["vida"]+=10
+    recuperar_mana()
+    evento_na_caverna()
 
 def evento_8():
-    global contador_de_eventos 
+    global contador_de_eventos
     contador_de_eventos += 1
-    print("Você descobre um caminho secreto.")
+    print("\n Você se depara com uma alcateia de lobos que avança contra você, é aterrorizante.")
+    batalha(lobo_faminto)
+    verificar_morte()
+    ganhar_xp(lobo_faminto)
+    lobo_faminto["vida"]+=25
+    recuperar_mana()
+    print("ainda há mais lobos aqui...")
+    batalha(lobo_faminto)
+    verificar_morte()
+    ganhar_xp(lobo_faminto)
+    lobo_faminto["vida"]+=25
+    recuperar_mana()
+    print("os lobos se afastam com medo de você, mas um ainda está confiante, o ALFA")
+    print("o lobo Alfa quer vingança")
+    batalha(lobo_alfa)
+    verificar_morte()
+    ganhar_xp(lobo_alfa)
+    lobo_alfa["vida"]+=40
+    evento_na_caverna()
 
 def evento_9():
     global contador_de_eventos 
@@ -522,11 +574,11 @@ def evento_na_caverna():
     print(f"Você já percorreu {contador_de_eventos} câmara(s)")
     perguntar_continuar_aventura()
     print("Hora de seguir em frente na caverna... \n")
+    print(" -------------------------------------------------------------------------")
     evento_escolhido = randint(0,10)
     eventos[evento_escolhido]()
 
 #área de teste de eventos
 #evento_1()
-evento_6()
-evento_10()
+evento_3()
 print(f"Dano: {aventureiro['dano']} | Vida: {aventureiro['vida']}")
