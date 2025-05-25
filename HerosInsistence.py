@@ -526,5 +526,7 @@ def evento_na_caverna():
     eventos[evento_escolhido]()
 
 #área de teste de eventos
+#evento_1()
 evento_6()
+evento_10()
 print(f"Dano: {aventureiro['dano']} | Vida: {aventureiro['vida']}")
