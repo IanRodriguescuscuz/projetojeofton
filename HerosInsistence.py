@@ -23,7 +23,7 @@ YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
 def quer_dizer_sim(resposta):
     resposta = resposta.strip().lower()
     return resposta in [
-        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly"
+        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly, continuar, pegar, ir, entrar, cogumelo"
     ]
     
 def perguntar_se_quer_jogar():
@@ -63,7 +63,8 @@ if perguntar_se_quer_jogar():
                "exp":0,
                "expmaximo":100,
                "mana":50,
-               "manamaxima":50}
+               "manamaxima":50,
+               "manaregen": 3}
     print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa agora...\n")
 else:
     print("\nTudo bem, quem sabe em outra hora. A caverna espera...\n")
@@ -94,7 +95,20 @@ Pedra_perigosamente_escorregadia = {
 
 }
 
+lagarto_das_cavernas = {
+    "nome":"lagarto-das-cavernas",
+    "dano": 25,
+    "vida": 60,
+    "exp":50,
+
+}
+
 contador_de_eventos = 0
+
+def recuperar_mana():
+    if aventureiro["mana"] < aventureiro["manamaxima"]:
+        aventureiro["mana"] += aventureiro["manaregen"]
+        print(f"Você naturalmente recupera {aventureiro ['manaregen']} pontos de mana")
 
 def ganhar_xp(npc):
     print(" -------------------------------------------------------------------------")
@@ -192,7 +206,7 @@ def batalha(npc):
         if aventureiro["mana"] >= 20:
             aventureiro["mana"] -= 20
             npc["vida"] -= aventureiro["mana"]*2
-            print(f"Você lança uma esfera mágica feita de pura mana que causa {aventureiro['mana']} de dano no {npc['nome']}!")
+            print(f"Você lança uma esfera mágica feita de pura mana que causa {aventureiro['mana']*2} de dano no {npc['nome']}!")
             print("Você sente que o próximo exori utamo vai ser menos eficaz")
             if npc["vida"] <= 0:
                 print(f"O {npc['nome']} foi evaporado!")
@@ -256,12 +270,19 @@ def cogumelo_efeito(decisão):
             aventureiro["vida"] += 20
             aventureiro["mana"] += 20
             print("Você recuperou 20 de vida e mana!")
+            recuperar_mana()
+            evento_na_caverna()
         elif efeitodocogumelo <= 2:
-            print("Que cogumelho horrivel! Você não deveria comer tudo que encontra no chão!, Você perde 20 pontos de vida")
+            print("Que cogumelho horrivel! Você não deveria comer tudo que encontra no chão!, Você perde 45 pontos de vida")
             aventureiro["vida"] -= 45
             verificar_morte()
+            recuperar_mana()
+            evento_na_caverna()
+
     else:
         print("Você ignora o cogumelo. Melhor prevenir do que remediar... ")
+        recuperar_mana()
+        evento_na_caverna()
  
 def evento_2():
     global contador_de_eventos
@@ -271,23 +292,56 @@ def evento_2():
     verificar_morte()
     ganhar_xp(morcego_gigante)
     morcego_gigante["vida"]+=40
+    recuperar_mana()
     evento_na_caverna()
 
 
 def evento_3():
     global contador_de_eventos
     contador_de_eventos += 1
-    print("Você escorrega em uma pedra e perde 15 de vida!\n")
-    aventureiro["vida"] -= 15
+    print("Você escorrega em uma pedra Perigosamente escorregadia e pontuda!\n")
+    
+    comando = input("Você lembra de algo que pode te tirar de armadilhas? oque fazer?> ").strip().lower()
+    
+    if comando == "utani hur":
+        if aventureiro["mana"] >= 5:
+            aventureiro["mana"] -= 5
+            print("\nVocê murmura palavras e, por um momento, sente o seu corpo extremamente rápido, Perigo evitado!\n")
+            dano = 0
+        else:
+            print("\nVocê tenta usar uma mágia, mas não tem mana suficiente!\n")
+            dano = 15
+    else:
+        print("\nVocê não faz ideia de como evitar isso!\n")
+        dano = 15
+
+    aventureiro["vida"] -= dano
+    if dano > 0:
+        print(f"Você bate forte e perde {dano} de vida.")
+    else:
+        print("Você evita completamente o impacto.")
+    
     verificar_morte()
-    print("pelo menos agora você está prestando mais atenção por onde pisa")
+    print("Pelo menos agora você está prestando mais atenção por onde pisa.")
     ganhar_xp(Pedra_perigosamente_escorregadia)
     evento_na_caverna()
+
 
 def evento_4():
     global contador_de_eventos
     contador_de_eventos += 1
-    print("Você encontra uma tocha acesa no chão.")
+    print("Você encontra uma tocha apagada no chão, ao lado de uma espada feita de um material de alta qualidade.")
+    decisão = input("\n\n                Pegar espada? > ").strip().lower()
+    if quer_dizer_sim(decisão):
+        print("Você empunha a espada com firmeza. Ela brilha mesmo na escuridão. +5 de dano!")
+        aventureiro["dano"] += 5 
+        recuperar_mana()
+        evento_na_caverna()
+    else:
+        print("Você ignora a espada. Às vezes, o peso da escolha é mais leve que o da lâmina.")
+        recuperar_mana()
+        evento_na_caverna()
+    
 
 def evento_5():
     global contador_de_eventos
@@ -343,7 +397,41 @@ def efeito_cristal_vida():
 def evento_6():
     global contador_de_eventos 
     contador_de_eventos += 1
-    print("Você encontra um aliado ferido pedindo ajuda.")
+
+    print("Você encontra um homem ferido pedindo ajuda. Ele está preso entre as pedras.")
+    print("""Ele diz:
+                -Você, ajudar, eu, esmagado, doer, muito! puxe, eu.""")
+
+    if jogador_ajuda_o_homem():
+        resolver_armadilha_com_ajuda()
+    else:
+        resolver_armadilha_sem_ajuda()
+
+def jogador_ajuda_o_homem():
+    resposta = input("Ajudar? (sim/não) > ").strip().lower()
+    return resposta in ["sim", "s"]
+
+def resolver_armadilha_com_ajuda():
+    print("Você tenta puxar o homem pelo braço, mas rapidamente ele desliza entre as pedras e te morde causando 35 de dano.")
+    aventureiro["vida"] -= 35
+    verificar_morte()
+
+    print("A aparência dele muda diante dos seus olhos. Você está diante de um lagarto-das-cavernas!")
+    enfrentar_lagarto()
+
+def resolver_armadilha_sem_ajuda():
+    print("Você decide passar direto, mas um som atrás de você chama a sua atenção.")
+    print("Aquilo tudo era uma armadilha! Não existia homem nenhum, era um lagarto-das-cavernas disfarçado!")
+    enfrentar_lagarto()
+
+def enfrentar_lagarto():
+    batalha(lagarto_das_cavernas)
+    verificar_morte()
+    ganhar_xp(lagarto_das_cavernas)
+    recuperar_mana()
+    lagarto_das_cavernas["vida"] += 60
+    evento_na_caverna()
+
 
 def evento_7():
     global contador_de_eventos 
@@ -382,8 +470,9 @@ def beber_agua(decisao):
         verificar_morte()
         ganhar_xp(goblim)
         goblim["vida"]+=50
+        recuperar_mana()
+        goblim["vida"] +=50
         evento_na_caverna()
-       
 
 
 def goblin():
@@ -405,6 +494,8 @@ def goblin():
                 batalha(goblim)
                 verificar_morte()
                 ganhar_xp(goblim)
+                recuperar_mana()
+                goblim["vida"] +=50
                 break
             else:
                 dano = 10 + tentativas * 5
@@ -428,12 +519,12 @@ def evento_11():
 
 eventos = [evento_1, evento_2, evento_3, evento_4, evento_5, evento_6, evento_7, evento_8, evento_9, evento_10, evento_11]
 def evento_na_caverna():
+    print(f"Você já percorreu {contador_de_eventos} câmara(s)")
+    perguntar_continuar_aventura()
     print("Hora de seguir em frente na caverna... \n")
     evento_escolhido = randint(0,10)
     eventos[evento_escolhido]()
-    perguntar_continuar_aventura()
 
 #área de teste de eventos
-
+evento_6()
 print(f"Dano: {aventureiro['dano']} | Vida: {aventureiro['vida']}")
-print(f"Você já percorreu {contador_de_eventos} câmara(s)")
