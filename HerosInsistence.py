@@ -1,24 +1,107 @@
 from random import randint
 
+reset = "\033[0m"
+bold = "\033[1m"
+italico = "\033[3m"
+underline = "\033[4m"
+normal = "\033[22m"
+
+preto = "\033[30m"
+vermelho = "\033[91m"
+verde = "\033[92m"
+amarelo = "\033[93m"
+azul = "\033[94m"
+magenta = "\033[95m"
+ciano = "\033[96m"
+branco = "\033[97m"
+marrom = "\033[38;5;94m"
+Rosa_claro = "\033[38;5;218m"
+rosa_medio= "\033[38;5;212m"
+verdelima = "\033[1;32m"
+laranja = "\033[38;5;208m"
+roxo = "\033[38;5;165m"
+vermelho_escuro = "\033[38;5;52m"
+fundo = "\033[40m"
+fundobranco ="\033[47m"
+
+def estilizar(texto, cor=branco, estilo=bold):
+    return f"{estilo}{cor}{texto}{reset}"
+
+
+def narrar(texto):
+    print(estilizar(texto, cor=magenta))
+
+def contando(texto):
+    print(estilizar(texto, cor=marrom, estilo=normal))
+
+def lascou(texto):
+    print(estilizar(texto, cor=vermelho))
+
+def estilo_envenenado(texto):
+    print(estilizar(texto, cor=verde, estilo=normal))
+
+def pos_batalha(texto):
+    print(estilizar(texto, cor=amarelo, estilo=italico))
+
+def xp_pos_batalha(texto):
+    print(estilizar(texto, cor=verdelima))
+
+def mana_pos_batalha(texto):
+    print(estilizar(texto, cor=azul,estilo=normal))
+
+def magia_linda(texto):
+    print(estilizar(texto, cor=Rosa_claro,estilo=italico))
+
+def magia_linda_cheguei(texto):
+    print(estilizar(texto, cor=rosa_medio,estilo=bold))
+
+def raridade(texto):
+    print(estilizar(texto, cor=laranja, estilo=underline))
+
+def cuidado(texto):
+    print(estilizar(texto, cor=vermelho, estilo=underline))
+
+def eletricidade(texto):
+    print(estilizar(texto, cor=roxo,estilo=normal))
+
+def morrendo(texto):
+    print(estilizar(texto, cor=vermelho_escuro,estilo=bold))
+
+def narração_final(texto):
+    print(estilizar(texto, cor=preto,estilo=bold))
+
+def narração_final_pergunta(pergunta):
+    return input(estilizar(pergunta + " ", cor=preto))
+
+
+def entrada_pergunta(pergunta):
+    return input(estilizar(pergunta + " ", cor=ciano))
+
+def entrada_pergunta_linda(pergunta):
+    return input(estilizar(pergunta + " ", cor=Rosa_claro))
+
+
 def tela_inicial():
+    print("\033[1;32m")  
     print(r"""           _  _             _  _
-  .       /\\/%\       .   /%\/%\     .
-      __.<\\%#//\\,_       <%%#/%%\\,__  .
-.    <%#/|\\%%%#///\\    /^%#%%\\///%#\\\\
+  .       /\ /%\       .   /%\/%\     .
+      __.<\%#//\\,_       <%%#/%%\\,__  .
+.    <%#/|\\%%%#///\\    /^%#%%\\///%#\\
       ""/%/""\\ \""//|   |/""'/ /\\//"//'
  .     L/'`   \\ \\  `    "   / /  ```
         `      \\ \\     .   / /       .
  .       .      \\ \\       / /  .
         .        \\ \\     / /          .
-   .      .    ..:\\ \\:::/ /:.     .     .
-______________/ \\__;\\___/\\;_/\\________________________________
+   .      .    ..:\ \\:::/ /:.     .     .
+______________/ \\__;\___/\;_/\\________________________________
 YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
-                  ---------------------------------------
-                |     escreva "aventura" para começar      |
-                  ---------------------------------------
-
-                     hero's insistence
-                          ~ O Rpg """)
+""")
+    print("\033[1;37m") 
+    print("                  \033[1;34m---------------------------------------\033[1;37m")
+    print("                |     escreva \"\033[1;33maventura\033[1;37m\" para começar      |")
+    print("                  \033[1;34m---------------------------------------\033[0m\n")
+    print("                     \033[1;35mhero's insistence")
+    print("                          ~ O Rpg\033[0m")
 
 def quer_dizer_sim(resposta):
     resposta = resposta.strip().lower()
@@ -27,12 +110,12 @@ def quer_dizer_sim(resposta):
     ]
     
 def perguntar_se_quer_jogar():
-    resposta = input("\n\n                Vamos entrar nesta caverna? > ").strip().lower()
+    resposta = entrada_pergunta("\n\n                Vamos entrar nesta caverna? > ").strip().lower()
     return quer_dizer_sim(resposta)
 
 
 def perguntar_nome():
-    print("\n" * 5)
+    print("\n")
     print("""         ---------------------------------------
         |     Qual o seu nome, aventureiro?      |
         |                                        |
@@ -69,7 +152,7 @@ if perguntar_se_quer_jogar():
                "utito_san": False,
                "envenenado": False
                }
-    print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa agora...\n")
+    print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa {laranja}agora...{reset}\n")
 else:
     print("\nTudo bem, quem sabe em outra hora. A caverna espera...\n")
     exit()
@@ -84,7 +167,7 @@ goblim = {
 morcego_gigante = {
 
     "nome":"morcego gigante",
-    "dano": 10,
+    "dano": 13,
     "vida": 40,
     "exp":20,
 
@@ -106,13 +189,13 @@ lagarto_das_cavernas = {
     "nome":"lagarto-das-cavernas",
     "dano": 0,
     "vida": 60,
-    "exp":50,
+    "exp":60,
 }
 Rainha_do_caos_abissal = {
     "nome":"Rainha do caos abissal",
     "dano": 10,
     "vida":50,
-    "exp": 50,
+    "exp": 60,
 
 }
 
@@ -143,10 +226,10 @@ contador_de_eventos = 0
 def recuperar_mana():
     if aventureiro["mana"] < aventureiro["manamaxima"]:
         aventureiro["mana"] += aventureiro["manaregen"]
-        print(f"Você naturalmente recupera {aventureiro ['manaregen']} pontos de mana")
+        mana_pos_batalha(f"Você naturalmente recupera {aventureiro ['manaregen']} pontos de mana")
 
 
-lista_de_magias = [">utani hur<", ">exura<", ">exor<i", ">exori kor<", ">exori con<", ">exori utamo<", ">utito san<", ">exori vis<"]
+lista_de_magias = [">utani hur<", ">exura<", ">exori<", ">exori kor<", ">exori con<", ">exori utamo<", ">utito san<", ">exori vis<"]
 
 def chance_de_aprender_magia():
     chance_de_aprender=randint(1,5)
@@ -155,23 +238,22 @@ def chance_de_aprender_magia():
 
 def aprender_magia():
     if not lista_de_magias:
-        print("Você já aprendeu todas as magias disponíveis.")
+        magia_linda_cheguei("Você já aprendeu todas as magias disponíveis.")
         return
     
     magia_escolhida = randint(0, len(lista_de_magias) - 1)
     magia = lista_de_magias.pop(magia_escolhida) 
     
-    if magia == "utani hur":
-        print(f"A palavra {magia} ecoa em seus pensamentos... Talvez sirva de algo em armadilha...")
+    if magia == ">utani hur<":
+        magia_linda_cheguei(f"{fundo}A palavra {magia} ecoa em seus pensamentos... Talvez sirva de algo em armadilhas...{reset}")
     else:
-        print(f"A palavra {magia} ecoa em seus pensamentos... Talvez sirva em alguma batalha...")
+        magia_linda_cheguei(f"{fundo}A palavra {magia} ecoa em seus pensamentos... Talvez sirva em alguma batalha...{reset}")
 
 def ganhar_xp(npc):
-    print(" -------------------------------------------------------------------------")
-    print("A Batalha foi árdua, mas a esperança de achar uma saída segue crescente.")
-    print(f"Você derrotou {npc['nome']} e ganhou {npc['exp']} de experiência!")
+    pos_batalha(" -------------------------------------------------------------------------")
+    pos_batalha("A Batalha foi árdua, mas a esperança de achar uma saída segue crescente.")
+    pos_batalha(f"Você derrotou {npc['nome']} e ganhou {npc['exp']} de experiência! ")
     chance_de_aprender_magia()
-    print("-------------------------------------------------------------------------")
 
     aventureiro["exp"] += npc["exp"]
 
@@ -183,34 +265,36 @@ def ganhar_xp(npc):
         aventureiro["expmaximo"] += 30 
         aventureiro["mana"] += 10
         aventureiro["manamaxima"] += 10
-        print(" Você subiu de nível! +5 de dano, +20 de vida máxima e 10 de mana máxima!")
-        print("\n\n -********--------************------***********------\n\n")
-    print(f"XP atual: {aventureiro['exp']} / {aventureiro['expmaximo']}")
+        print(f"{branco}Você subiu de nível! +5 de dano, +20 de vida máxima e 10 de mana máxima!{reset}")
+    xp_pos_batalha(f"XP atual: {aventureiro['exp']} / {aventureiro['expmaximo']}")
+    pos_batalha("-------------------------------------------------------------------------")
 
 def verificar_morte():
     limpar_buff_condicaos()
     if aventureiro["vida"] <= 0:
-        print("\n Você morreu. Sua jornada termina aqui. ")
+        morrendo(f"\n {fundo}Você morreu. Sua jornada termina aqui.{reset} ")
         exit()
     
 
 def perguntar_continuar_aventura():
-    resposta = input("\nVocê deseja continuar explorando a caverna? > ").strip().lower()
+    resposta = entrada_pergunta("\nVocê deseja continuar explorando a caverna? > ").strip().lower()
     if quer_dizer_sim(resposta):
-        print("\nVocê respira fundo e segue adiante na escuridão...\n")
+        contando("\nVocê respira fundo e segue adiante na escuridão...\n")
     else:
-        print("\nVocê encara a escuridão e ela te encara de volta. Isso não foi uma boa ideia.\n")
-        print("fim.")
+        print("\n")
+        print(f"{preto}{fundobranco}Você encara a escuridão e ela te encara de volta. Isso não foi uma boa ideia.{reset}")
+        print("\n")
+        print(f"{branco}{fundo}fim.{reset}")
         exit()
 
 def batalha(npc):
-    print("\nA batalha começou!")
+    lascou("\nA batalha começou!")
 
     def exura():
         if aventureiro["mana"] >= 10:
             aventureiro["vida"] += 40
             aventureiro["mana"] -= 10
-            print("Você se cura em +40 de vida!")
+            print(f"Você se cura em {vermelho}+40 de vida!{reset}")
         else:
             print("Você não tem mana suficiente!")
     
@@ -221,7 +305,7 @@ def batalha(npc):
             print("você conjura um ataque devastador e brutal.")
             if npc["vida"] > 0:
                 aventureiro["vida"] -= npc["dano"]
-                print(f"O {npc['nome']} está gravimente ferido, mas revida e causa {npc['dano']} de dano!")
+                cuidado(f"O {npc['nome']} está gravimente ferido, mas revida e causa {npc['dano']} de dano!")
             else:
                 print(f"O {npc['nome']} foi DEVASTADO!")
         else:
@@ -229,25 +313,25 @@ def batalha(npc):
 
     def morenoaltomusculoso():
         npc["vida"] = 0
-        print(f"O {npc["nome"]} encara mozao e morre xD")
+        print(f"{verdelima}{fundo}O {npc["nome"]} encara mozao e morre xD{reset}")
         
     def exori_kor():
         if aventureiro["mana"] >= 10:
             aventureiro["mana"] -= 10
             npc["vida"] -= aventureiro["dano"]
-            aventureiro["vida"] += aventureiro["dano"]
-            print(f"A sua lâmina conjura um ataque vampírico que te cura em {aventureiro['dano']} ")
+            aventureiro["vida"] += aventureiro["dano"]+10
+            lascou(f"A sua lâmina conjura um ataque vampírico que te cura em {aventureiro['dano']+10} ")
             if npc["vida"] > 0:
                 aventureiro["vida"] -= npc["dano"]
-                print(f"O {npc['nome']} está assutado, mas revida e causa {npc['dano']} de dano!")
+                cuidado(f"O {npc['nome']} está assutado, mas revida e causa {npc['dano']} de dano!")
             else:
                 print(f"O {npc['nome']} foi derrotado")
         else:
             print("Você não tem mana suficiente!")
 
     def exori_con():
-        if aventureiro["mana"] >= 10:
-            aventureiro["mana"] -= 10
+        if aventureiro["mana"] >= 5:
+            aventureiro["mana"] -= 5
             npc["vida"] -= aventureiro["dano"]
             print(f"Você lança uma flecha mágica que causa {aventureiro['dano']} de dano no {npc['nome']}!")
             print("Você ataca de longe e está seguro")
@@ -261,7 +345,7 @@ def batalha(npc):
             aventureiro["mana"] -= 10
             if aventureiro["utito_san"] == False:
                 aventureiro["dano"] += 5
-                print("Voce sente agora poderes sagrados guiando sua espada. . . Seu poder aumentou")
+                pos_batalha(f"{fundo}Voce sente agora poderes sagrados guiando sua espada. . . Seu poder aumentou{reset}")
                 aventureiro["utito_san"] = True
             else:
                 print("Utito san ja está ativo")
@@ -273,7 +357,7 @@ def batalha(npc):
         if aventureiro["mana"] >= 20:
             aventureiro["mana"] -= 20
             npc["vida"] -= aventureiro["mana"]*2
-            print(f"Você lança uma esfera mágica feita de pura mana que causa {aventureiro['mana']*2} de dano no {npc['nome']}!")
+            mana_pos_batalha(f"Você lança uma esfera mágica feita de pura mana que causa {aventureiro['mana']*2} de dano no {npc['nome']}!")
             print("Você sente que o próximo exori utamo vai ser menos eficaz")
             if npc["vida"] <= 0:
                 print(f"O {npc['nome']} foi evaporado!")
@@ -284,14 +368,14 @@ def batalha(npc):
         if aventureiro["mana"] >= 15:
             aventureiro["mana"] -= 15
             npc["vida"] -= 25
-            print(f"Você lança uma esfera elétrica que causa {aventureiro['mana']} de dano no {npc['nome']}!")
+            eletricidade(f"Você lança uma esfera elétrica que causa 25 de dano no {npc['nome']}!")
             if npc["vida"] <= 0:
                 print(f"O {npc['nome']} virou churrasco!")
         else:
             print("Você não tem mana suficiente!")
 
     def magia():
-        print(""">>> Magias possuem palavras mágicas.
+        magia_linda(""">>> Magias possuem palavras mágicas.
                      as diga e elas aconteceram!  <<<""")
 
         
@@ -301,7 +385,7 @@ def batalha(npc):
         print(f"Você ataca e causa {aventureiro['dano']} de dano no {npc['nome']}!")
         if npc["vida"] > 0:
             aventureiro["vida"] -= npc["dano"]
-            print(f"O {npc['nome']} revida e causa {npc['dano']} de dano!")
+            cuidado(f"O {npc['nome']} revida e causa {npc['dano']} de dano!")
         else:
             print(f"O {npc['nome']} foi derrotado!")
 
@@ -322,10 +406,10 @@ def batalha(npc):
     while aventureiro["vida"] > 0 and npc["vida"] > 0:
         if aventureiro["envenenado"] == True:
             aventureiro["vida"] -= 10
-            print("Você está envenenado e perde 10 de vida")
+            estilo_envenenado("Você está envenenado e perde 10 de vida")
         if npc["nome"] == "lagarto-das-cavernas":
             npc["dano"] = danodolagarto()
-        ação = input("\nO que você vai fazer? > [Magia / Atacar / Status] >> ").strip().lower()
+        ação = entrada_pergunta("\nO que você vai fazer? > [Magia / Atacar / Status] >> ").strip().lower()
         print("\n")
         if ação in ações_na_batalha:
             ações_na_batalha[ação]()
@@ -345,7 +429,7 @@ def limpar_buff_condicaos():
 def evento_1():
     global contador_de_eventos
     print("Você adentra na caverna e encontra um cogumelo estranho, mas bem apetitoso")
-    decisão = input("\n\n                comer? > ").strip().lower()
+    decisão = entrada_pergunta("\n\n                comer? > ").strip().lower()
     contador_de_eventos += 1
     cogumelo_efeito(decisão)
     return quer_dizer_sim(decisão)
@@ -354,10 +438,10 @@ def cogumelo_efeito(decisão):
     if quer_dizer_sim(decisão):
         efeitodocogumelo = randint(1,5)
         if efeitodocogumelo >= 3:
-            print("Você come o cogumelo... e é muito saboroso 🍄✨")
+            print(f"Você come o cogumelo... e é muito {rosa_medio}saboroso{reset} 🍄✨")
             aventureiro["vida"] += 20
             aventureiro["mana"] += 20
-            print("Você recuperou 20 de vida e mana!")
+            print(f"Você recuperou 20 de {vermelho}vida{reset} e {azul}mana!{reset}")
             recuperar_mana()
             evento_na_caverna()
         elif efeitodocogumelo <= 2:
@@ -379,7 +463,7 @@ def evento_2():
     batalha(morcego_gigante)
     verificar_morte()
     ganhar_xp(morcego_gigante)
-    morcego_gigante["vida"]+=40
+    morcego_gigante["vida"]=40
     recuperar_mana()
     evento_na_caverna()
 
@@ -389,7 +473,7 @@ def evento_3():
     contador_de_eventos += 1
     print("Você escorrega em uma pedra Perigosamente escorregadia e pontuda!\n")
     
-    comando = input("há uma magia que te protegeria nessa situação. Oque fazer?> ").strip().lower()
+    comando = entrada_pergunta("há uma magia que te protegeria nessa situação. Oque fazer?> ").strip().lower()
     
     if comando == "utani hur":
         if aventureiro["mana"] >= 5:
@@ -405,7 +489,7 @@ def evento_3():
 
     aventureiro["vida"] -= dano
     if dano > 0:
-        print(f"Você bate forte e perde {dano} de vida.")
+        lascou(f"Você bate forte e perde {dano} de vida.")
     else:
         print("Você evita completamente o impacto.")
     
@@ -418,7 +502,7 @@ def evento_4():
     global contador_de_eventos
     contador_de_eventos += 1
     print("Você encontra uma tocha apagada no chão, ao lado de uma espada feita de um material de alta qualidade.")
-    decisão = input("\n\n                Pegar espada? > ").strip().lower()
+    decisão = entrada_pergunta("\n\n                Pegar espada? > ").strip().lower()
     if quer_dizer_sim(decisão):
         print("Você empunha a espada com firmeza. Ela brilha mesmo na escuridão. +5 de dano!")
         aventureiro["dano"] += 5 
@@ -434,7 +518,7 @@ def evento_5():
     global contador_de_eventos
     contador_de_eventos += 1
     print("Você encontra um esqueleto no chão da caverna. Ele aparenta ter alguns pertences... deseja vasculhar?")
-    quervasculhar = input("> ").strip().lower()
+    quervasculhar = entrada_pergunta("> ").strip().lower()
     if quer_dizer_sim(quervasculhar):
         possiveis_loots = [
             ("grimório do druida", efeito_grimorio_druida),
@@ -448,9 +532,9 @@ def evento_5():
 
         loot, funcao_efeito = possiveis_loots[randint(0, 6)]
 
-        print(f"\nVocê encontra: {loot.upper()}!")
+        print(f"\nVocê encontra:{laranja}{italico}{loot.upper()}{reset}!")
         funcao_efeito()
-        input("\n Pressione >ENTER< para continuar sua jornada")
+        entrada_pergunta("\n Pressione >ENTER< para continuar sua jornada")
         evento_na_caverna()
     else:
         print("Você decide não mexer nos pertences do esqueleto. Melhor não perturbar os mortos e continua caminhando...")
@@ -495,11 +579,11 @@ def evento_6():
         resolver_armadilha_sem_ajuda()
 
 def jogador_ajuda_o_homem():
-    resposta = input("Ajudar? (sim/não) > ").strip().lower()
+    resposta = entrada_pergunta("Ajudar? (sim/não) > ").strip().lower()
     return resposta in ["sim", "s"]
 
 def resolver_armadilha_com_ajuda():
-    print("Você tenta puxar o homem pelo braço, mas rapidamente ele desliza entre as pedras e te morde causando 35 de dano.")
+    print(f"Você tenta puxar o homem pelo braço, mas rapidamente ele desliza entre as pedras e {vermelho}te morde causando 35 de dano.{reset}")
     aventureiro["vida"] -= 35
     verificar_morte()
 
@@ -516,42 +600,42 @@ def enfrentar_lagarto():
     verificar_morte()
     ganhar_xp(lagarto_das_cavernas)
     recuperar_mana()
-    lagarto_das_cavernas["vida"] += 60
+    lagarto_das_cavernas["vida"] = 60
     evento_na_caverna()
 
 
 def evento_7():
     global contador_de_eventos
     contador_de_eventos += 1
-    print("\n Você segue até que...Um coelho agressivo avança contra você!")
+    print(f"\n Você segue até que...Um coelho {Rosa_claro}agressivo{reset} avança contra você!")
     batalha(coelho_agressivo)
     verificar_morte()
     ganhar_xp(coelho_agressivo)
-    coelho_agressivo["vida"]+=10
+    coelho_agressivo["vida"]=10
     recuperar_mana()
     evento_na_caverna()
 
 def evento_8():
     global contador_de_eventos
     contador_de_eventos += 1
-    print("\n Você se depara com uma alcateia de lobos que avança contra você, é aterrorizante.")
+    print("\n Você se depara com uma alcateia de lobos que avançam contra você, é aterrorizante.")
     batalha(lobo_faminto)
     verificar_morte()
     ganhar_xp(lobo_faminto)
-    lobo_faminto["vida"]+=25
+    lobo_faminto["vida"]=25
     recuperar_mana()
-    print("ainda há mais lobos aqui...")
+    cuidado("ainda há mais lobos aqui...")
     batalha(lobo_faminto)
     verificar_morte()
     ganhar_xp(lobo_faminto)
-    lobo_faminto["vida"]+=25
+    lobo_faminto["vida"]=25
     recuperar_mana()
-    print("os lobos se afastam com medo de você, mas um ainda está confiante, o ALFA")
-    print("o lobo Alfa quer vingança")
+    print(f"os lobos se afastam com medo de você, mas um ainda está confiante, o {laranja}ALFA{reset}")
+    print(f"o lobo {laranja}Alfa{reset} quer vingança")
     batalha(lobo_alfa)
     verificar_morte()
     ganhar_xp(lobo_alfa)
-    lobo_alfa["vida"]+=40
+    lobo_alfa["vida"]=40
     evento_na_caverna()
 
 def evento_9():
@@ -565,7 +649,7 @@ def evento_9():
     Metade donzela pálida, metade aranha demoníaca,
     Seus oito olhos brilham com a loucura dos Deuses Antigos.
     
-    "\033[33mPobres tolos... O fogo que buscam os consumirá!\033[0m"
+    "\033[33mPobre tolo... O fogo que busca o consumirá!\033[0m"
 
     \033[31m>> A Rainha do Caos Abissal avança em sua direção e corta você! <<\033[0m
 ''')
@@ -573,7 +657,7 @@ def evento_9():
     batalha(Rainha_do_caos_abissal)
     verificar_morte()
     ganhar_xp(Rainha_do_caos_abissal)
-    Rainha_do_caos_abissal["vida"] += 50
+    Rainha_do_caos_abissal["vida"] = 50
     recuperar_mana()
     evento_na_caverna()
     
@@ -583,15 +667,15 @@ def evento_10():
     global contador_de_eventos 
     contador_de_eventos += 1
     print("Voce percorre por um caminho estreito, longo e apertado. . .")
-    decisao = input("\n\nVocê chega em área aberta, com um poço de água à sua esquerda, você está cansado. . . você imediatamente sente sede. . .,\n\n\ndeseja beber da água? > ").strip().lower()
+    decisao = entrada_pergunta("\n\nVocê chega em área aberta, com um poço de água à sua esquerda, você está cansado. . . você imediatamente sente sede. . .,\n\n\ndeseja beber da água? > ").strip().lower()
     beber_agua(decisao)
     return quer_dizer_sim(decisao)
     
 
 def beber_agua(decisao):
     if quer_dizer_sim(decisao):
-        print("""
-              \n\n\nVocê começa a sentir um mal-estar, você cambalea e começa a perder o equilíbrio, voce procura um local de apoio, porém acaba caindo e perdendo a consciência. . .\n\n\nAo acordar, você nota que suas mãos estão amarradas, ao olhar a o redor, uma figura pequena, feia e nojenta com uma faca em sua cintura te encara de olhos abertos e salivando pela boca. . .\n\n\n
+        print(f"""
+              \n\n\nVocê começa a sentir um mal-estar, você cambalea e começa a perder o equilíbrio, voce procura um local de apoio, porém acaba caindo e perdendo a consciência. . .\n\n\nAo acordar, você nota que {vermelho}suas mãos estão amarradas{reset}, ao olhar a o redor, uma figura pequena, feia e nojenta com uma faca em sua cintura te encara de olhos abertos e salivando pela boca. . .\n\n\n
             
               """)
         goblin()
@@ -600,21 +684,21 @@ def beber_agua(decisao):
         batalha(goblim)
         verificar_morte()
         ganhar_xp(goblim)
-        goblim["vida"]+=50
+        goblim["vida"]=50
         recuperar_mana()
         evento_na_caverna()
 
 
 def goblin():
     tentativas = 0
-    print("Suas mãos estão amarradas. O goblin caminha em sua direção, afiando sua faca...")
+    print(f"{vermelho}Suas mãos estão amarradas{reset}. O goblin caminha em sua direção, afiando sua faca...")
 
     while True:
         if aventureiro["vida"] <= 0:
-            print(" Você sucumbiu aos ferimentos enquanto tentava escapar...")
+            morrendo("Você sucumbiu aos ferimentos enquanto tentava escapar...")
             exit()
 
-        opcao = input("\nO que você vai fazer? [desamarrar / esperar] > ").strip().lower()
+        opcao = entrada_pergunta("\nO que você vai fazer? [desamarrar / esperar] > ").strip().lower()
 
         if opcao == "desamarrar":
             tentativas += 1
@@ -625,7 +709,7 @@ def goblin():
                 verificar_morte()
                 ganhar_xp(goblim)
                 recuperar_mana()
-                goblim["vida"] +=50
+                goblim["vida"] =50
                 break
             else:
                 dano = 10 + tentativas * 5
@@ -645,7 +729,7 @@ def evento_11():
     global contador_de_eventos
     contador_de_eventos += 1
 
-    print(
+    magia_linda(
         "✧･ﾟ: *✧･ﾟ:* *:･ﾟ\n Você encontra um ambiente diferente do usual, "
         "um local cheio de pedras brilhantes, coloridas e com um ar acolhedor. "
         "Você olha para o teto e consegue enxergar luzes vindas do sol. \n✧･ﾟ: *✧･ﾟ:* *:･ﾟ"
@@ -654,7 +738,7 @@ def evento_11():
     lista_de_cor_da_fada = ["vermelha", "azul", "azul-aqua", "amarela", "verde", "colorida"]
     chance_da_cor = randint(0, 5)
 
-    input(
+    entrada_pergunta_linda(
         f" Ao longe, você vê uma pequena figura {lista_de_cor_da_fada[chance_da_cor]} "
         "vindo em sua direção...\n\n ✧･ﾟ: *✧･ﾟ:* *:･ﾟTecle ENTER para continuar"
     )
@@ -664,12 +748,12 @@ def evento_11():
     aventureiro["vida"] += 15
     aventureiro["manaregen"] += 2
 
-    input(
+    entrada_pergunta_linda(
         "\nSua vida aumenta em 15, e sua regeneração de mana em 2..."
         "\n✧･ﾟ: *✧･ﾟ:* *:･ﾟTecle ENTER para continuar"
     )
 
-    print(
+    pos_batalha(
         "\nVocê se enche de determinação!\n✧･ﾟ: *✧･ﾟ:* *:･ﾟ"
     )
 
@@ -679,16 +763,25 @@ def evento_11():
 
 eventos = [evento_1, evento_2, evento_3, evento_4, evento_5, evento_6, evento_7, evento_8, evento_9, evento_10, evento_11]
 def evento_na_caverna():
-    if contador_de_eventos > 8:
-        print("Voce chegou muito longe . . .")
+    if contador_de_eventos > 9:
+        print(f"{laranja}{underline}Voce chegou muito longe . . .{reset} \n")
     else:
-        print(f"Você já percorreu {contador_de_eventos} câmara(s)")
+        contando(f"Você já percorreu {contador_de_eventos} câmara(s)")
         perguntar_continuar_aventura()
-        print("Hora de seguir em frente na caverna... \n")
+        contando("Hora de seguir em frente na caverna... \n")
         print(" -------------------------------------------------------------------------")
         evento_escolhido = randint(0,10)
         eventos[evento_escolhido]()
-    
+
 evento_na_caverna()
-print("boss fight")
+
+
+narração_final_pergunta(f"`{fundobranco}Sofra,{reset}")
+narração_final_pergunta(f"`{fundobranco}Estude,{reset}")
+narração_final_pergunta(f"`{fundobranco}Melhore,{reset}")
+narração_final_pergunta(f"`{fundobranco}Busque,{reset}")
+narração_final_pergunta(f"`{fundobranco}E então...{reset}")
+narração_final_pergunta(f"`{fundobranco}Me enfrente.{reset}")
+
+
 exit()
