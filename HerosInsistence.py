@@ -73,6 +73,8 @@ def narração_final(texto):
 def narração_final_pergunta(pergunta):
     return input(estilizar(pergunta + " ", cor=preto))
 
+def narração_final_perguntap(pergunta):
+    return input(estilizar(pergunta + " ", cor=branco))
 
 def entrada_pergunta(pergunta):
     return input(estilizar(pergunta + " ", cor=ciano))
@@ -106,7 +108,7 @@ YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
 def quer_dizer_sim(resposta):
     resposta = resposta.strip().lower()
     return resposta in [
-        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo", "sm", "simm","go","sin", ""
+        "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo", "sm", "simm","go","sin", "","status"
     ]
     
 def perguntar_se_quer_jogar():
@@ -167,7 +169,7 @@ goblim = {
 morcego_gigante = {
 
     "nome":"morcego gigante",
-    "dano": 13,
+    "dano": 15,
     "vida": 40,
     "exp":20,
 
@@ -217,8 +219,15 @@ lobo_faminto = {
 lobo_alfa = {
     "nome":"Lobo ALFA",
     "dano": 15,
-    "vida": 40,
+    "vida": 45,
     "exp":30,
+}
+
+Moreno = {
+    "nome":"Moreno",
+    "dano": 1,
+    "vida": 1,
+    "exp":500,
 }
 
 contador_de_eventos = 0
@@ -266,6 +275,7 @@ def ganhar_xp(npc):
         aventureiro["mana"] += 10
         aventureiro["manamaxima"] += 10
         print(f"{branco}Você subiu de nível! +5 de dano, +20 de vida máxima e 10 de mana máxima!{reset}")
+        aprender_magia()
     xp_pos_batalha(f"XP atual: {aventureiro['exp']} / {aventureiro['expmaximo']}")
     pos_batalha("-------------------------------------------------------------------------")
 
@@ -482,10 +492,10 @@ def evento_3():
             dano = 0
         else:
             print("\nVocê tenta usar uma mágia, mas não tem mana suficiente!\n")
-            dano = 15
+            dano = 25
     else:
         print("\nVocê não faz ideia de como evitar isso!\n")
-        dano = 15
+        dano = 25
 
     aventureiro["vida"] -= dano
     if dano > 0:
@@ -504,7 +514,7 @@ def evento_4():
     print("Você encontra uma tocha apagada no chão, ao lado de uma espada feita de um material de alta qualidade.")
     decisão = entrada_pergunta("\n\n                Pegar espada? > ").strip().lower()
     if quer_dizer_sim(decisão):
-        print("Você empunha a espada com firmeza. Ela brilha mesmo na escuridão. +5 de dano!")
+        print(f"Você empunha a espada com firmeza. Ela brilha mesmo na escuridão. {laranja}+5 de dano!{reset}")
         aventureiro["dano"] += 5 
         recuperar_mana()
         evento_na_caverna()
@@ -542,25 +552,25 @@ def evento_5():
     
 
 def efeito_grimorio_druida():
-    print("A maioria das páginas estão sujas, mas algumas palavras parecem repelir as impurezas. >exura< e >exori utamo<, talvez elas sejam interessantes de serem usadas em uma >batalha<")
+    print(f"A maioria das páginas estão sujas, mas algumas palavras parecem repelir as impurezas. >{underline}{verde}exura{reset}< e >{underline}{azul}exori utamo{reset}<, talvez elas sejam interessantes de serem usadas em uma >batalha<")
 
 def efeito_espada_afiada():
-    print("A lâmina brilha ainda mais que a sua! o seu dano aumentou em 5")
+    print(f"A lâmina brilha ainda mais que a sua! o seu dano aumentou em {laranja}5{reset}")
     aventureiro["dano"] += 5
 def efeito_grimorio_arcano():
-    print("O grimório pulsa com magia pura e parece se comunicar com você...>utani hur< pode ser usado para fugir de armadilhas e >exori vis< causará grande dano em batalha")
+    print(f"O grimório pulsa com magia pura e parece se comunicar com você...>{underline}{verdelima}utani hur{reset}< pode ser usado para fugir de armadilhas e >{underline}{roxo}exori vis{reset}< causará grande dano em batalha")
 
 def efeito_grimorio_arqueiro():
-    print("O grimório diz detalhadamente da sensação do espirito e da flecha se mesclando em batalha. >exori con< e >utito san< podem ser usado em batalha")
+    print(f"O grimório diz detalhadamente da sensação do espirito e da flecha se mesclando em batalha. >{underline}{vermelho}exori con{reset}< e >{underline}{amarelo}utito san{reset}< podem ser usado em batalha")
 def efeito_grimorio_guerreiro():
-    print("uma carta com sangue relata inúmeras situações de luta e tecnicas que um guerreiro usou para subjulgar os seus inimigos. >exori< e >exori kor< podem ser usados em batalha")
+    print(f"uma carta com sangue relata inúmeras situações de luta e tecnicas que um guerreiro usou para subjulgar os seus inimigos. >{underline}{laranja}exori{reset}< e >{underline}{vermelho}exori kor{reset}< podem ser usados em batalha")
 
 def efeito_cristal_mana():
-    print("Um cristal que no piscar de olhos se mescla com a sua alma. +15 de mana máxima")
+    print(f"Um cristal que no piscar de olhos se mescla com a sua alma. {azul}+15 de mana máxima{reset}")
     aventureiro["mana"] += 15
     aventureiro["manamaxima"] += 15
 def efeito_cristal_vida():
-    print("Você sente uma aura quente e reconfortante. Suas feridas se fecham e seus musculos crescem.")
+    print(f"Você sente uma aura quente e reconfortante. {vermelho}Suas feridas se fecham{reset} e seus musculos crescem.")
     aventureiro["vida"] +=10
     aventureiro["vidamaxima"] +=10
 
@@ -763,6 +773,9 @@ def evento_11():
 
 eventos = [evento_1, evento_2, evento_3, evento_4, evento_5, evento_6, evento_7, evento_8, evento_9, evento_10, evento_11]
 def evento_na_caverna():
+    if contador_de_eventos == 0:
+            evento_escolhido = randint(0,10)
+            eventos[evento_escolhido]()
     if contador_de_eventos > 9:
         print(f"{laranja}{underline}Voce chegou muito longe . . .{reset} \n")
     else:
@@ -773,15 +786,26 @@ def evento_na_caverna():
         evento_escolhido = randint(0,10)
         eventos[evento_escolhido]()
 
+
+
 evento_na_caverna()
 
+narração_final_pergunta(f"{fundobranco}Sofra,{reset}")
+narração_final_pergunta(f"{fundobranco}Treine,{reset}")
+narração_final_pergunta(f"{fundobranco}Melhore,{reset}")
+narração_final_pergunta(f"{fundobranco}Busque,{reset}")
+narração_final_pergunta(f"{fundobranco}E então...{reset}")
+narração_final_pergunta(f"{fundobranco}Me enfrente.{reset}")
+input("")
+narração_final_pergunta(f"{fundo}Me sirva ,{reset}")
+narração_final_pergunta(f"{fundo}Faça tudo oque eu pedir,{reset}")
+narração_final_pergunta(f"{fundo}Me chame de rei, de mestre, de senhor.{reset}")
+narração_final_pergunta(f"{fundo}e quem sabe assim,{reset}")
+narração_final_pergunta(f"{fundo}Eu te permita viver.{reset}")
 
-narração_final_pergunta(f"`{fundobranco}Sofra,{reset}")
-narração_final_pergunta(f"`{fundobranco}Estude,{reset}")
-narração_final_pergunta(f"`{fundobranco}Melhore,{reset}")
-narração_final_pergunta(f"`{fundobranco}Busque,{reset}")
-narração_final_pergunta(f"`{fundobranco}E então...{reset}")
-narração_final_pergunta(f"`{fundobranco}Me enfrente.{reset}")
+input("")
 
+print(f"{fundo}{branco}{underline}A sua ultima batalha acaba de {vermelho}começar.{reset}")
+input("")
 
 exit()
