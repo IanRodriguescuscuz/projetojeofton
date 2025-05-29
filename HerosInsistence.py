@@ -874,6 +874,7 @@ def evento_8():
     batalha(lobo_alfa)
     verificar_morte()
     ganhar_xp(lobo_alfa)
+    recuperar_mana()
     lobo_alfa["vida"]=40
     evento_na_caverna()
 
@@ -1085,9 +1086,7 @@ def evento_na_caverna():
         evento_escolhido = randint(0,10)
         eventos[evento_escolhido]()
 
-
-evento_11()
-#evento_na_caverna()
+evento_9()
 
 narração_final_pergunta(f"{fundobranco}Sofra,{reset}")
 narração_final_pergunta(f"{fundobranco}Treine,{reset}")
