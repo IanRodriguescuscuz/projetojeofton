@@ -157,7 +157,9 @@ if perguntar_se_quer_jogar():
                "manamaxima":50,
                "manaregen": 5,
                "utito_san": False,
-               "envenenado": False
+               "envenenado": False,
+               "contadordecristal": 0,   
+               "sangramento": False,            
                }
     print(f"\nBem-vindo, {aventureiro['nome']}! Sua aventura começa {laranja}agora...{reset}\n")
 else:
@@ -1078,7 +1080,7 @@ def evento_na_caverna():
         evento_escolhido = randint(0,10)
         eventos[evento_escolhido]()
 
-evento_na_caverna()
+#evento_na_caverna()
 
 narração_final_pergunta(f"{fundobranco}Sofra,{reset}")
 narração_final_pergunta(f"{fundobranco}Treine,{reset}")
@@ -1093,9 +1095,198 @@ narração_final_pergunta(f"{fundo}Me chame de rei, de mestre, de senhor.{reset}
 narração_final_pergunta(f"{fundo}e quem sabe assim,{reset}")
 narração_final_pergunta(f"{fundo}Eu te permita viver.{reset}")
 
-input("")
 
-print(f"{fundo}{branco}{underline}A sua ultima batalha acaba de {vermelho}começar.{reset}")
-input("")
+input(f"\n{fundo}{branco}{underline}A sua ultima batalha acaba de {vermelho}começar.{reset}\n>")
+print(f"""{branco}
+      
+ ░▒▒░░▒░▒▒░▒▒▒▒▒▒▒░▒░▒▒▒▒░▒▒░░░▒▒▒░░░░▒░▒▒▒▒▒▒░▒▒░▒░░░░░░░▒░░▒▒▒▒▒▒▒▒▒▒ 
+ ░▒░░░░░▒▒▒▒░░░░░▒▒▒▒░░░░░░▒░▒░░░░░▓█░░░░░░░░▒░▒▒▒░░▒░░░░░░░▒░░░▒░░░▒▒░ 
+ ░▒░▒░▒▒▒░░░▒░▒▒░░░░▒░▒░░░▒░░░░░░░▓░█░░░░░░▒░▒░░░░░▒░▒░▒▒░▒▒▒░░▒░░▒░▒▒░ 
+ ▒▒▒▒▒▒▒░▒▒░░░▒▒▒▒▒▒▒░▒░▒░░▒▒░░█▓░█░███░██░░░░░▒░▒▒▒░░░░▒░▒▒░░▒▒░▒▓░░▒▒ 
+ ▒░▒░░▒▒▒░░▒▒▒░░░░░░▒░░░▒░▒▒░░ ▓░██░███░█ ▒░░░▒░░░░▒░▒▒░▒░▒░░▒░░░▒▓░░▒░ 
+ ▒▒░░░▒░▒░░░░░░░░░░░░░░░░░░░░░█▒█░░▒█░████░░░▒░░░░░░░░░░░░▒░░░░░░▒▓▒░░░ 
+ ░▒░░░░░░░░░░░░░░░░░░▒░░░░▒░░███░░░█▓▓▒████░░░░░░░░▒▒░░░░░▒▒░░░░░░▒█▒░░ 
+ ▒▒░▒░░▓░░▒░░▒▒░▒▒▒░▒░░▒░░░▒░░░████░░▓█▓▓ ░░░░░░▒▒░▒░░░▒░░░▒░░░▒▓▒▒▓░░░ 
+ ░░░░░▒▓░░░▒░░░░░░░░░░░░░░░░░░░█░▒░░█░▒▓█ ░░░██░░ ░░░░░░░▒░░░░░▒▒░▒▓░░░ 
+ ░░░░░▒▓▓░░▒▒░░░▒░░░▒░██ ░░██ ░█░█▓▓███░█▒ ░▓█▒ ░███░░▒░░░▒░▒░░▒▓░▒▓░░▒ 
+ ░░░▒░▒▒▓▒░▒░░░░░░░░░░░█░█░░▓░▓▓▓██▒▓██▒██░█░█▒░▒██ ░▒░░░░▒░░░▒▓▒▒▒▓▒░▓ 
+ ▒░░░░▒▒▓▒░░░░░▒░▒▒░░░░ █░▓███▒█████████▒█░█░█░██ ░░░░░░▒▒▓▒░░░▓▒▒░▓▒▒▒ 
+ ▓▓▓▓▒▒▒▓▒░░▒░░░▒░░▒░░█▓██▓▓░█████▓█▓▒▓▒█▓▒░███████░░▒░░▓░▒▒░░░▒▒░▒▒░▒░ 
+ ▒▒▒▒▒▒▒▒▒░▓█░░░▒▒▒▒▒░░░██░░▓░░█▓░░░▓▒█░██░░▒▒██   ░░░░░▒▒▒▒░▓▓▒▒░▒▓▒▓▓ 
+ ▒▓▓▓▒▒▒▒▓▓▒▓▒░░▒░░░░░░░░▓██▓█▓░░██▒▓░█▓████▓▓█████░░▒░░░▒▒▒▒░▒░▒░░▒░▒▓ 
+ ▓░░░▒▒▒▒▒▒▓▓░░▒░░░░░▒░▒▒ ▒███░░░░█▒▓░░░░█████▓░  ░░░▒░▒▒▒▒░▒▒▒▒▓▒▓▒▒▒▒ 
+ ▓░░░▒▒▒▒▒░▒▒▒░░░░▒▓░░░░░███▒██████░████████▒███▒░░░░░░░▒░▒▓█░▒▒▒░▒▒▒▓▒ 
+ ▓░░░▒▒▒▒▒░▒▒▒░░▓▓▒▓░░░░░ ▓▒▓██▒██▓███▓▓████▓██  █▓▒▓▒░░█▒▒▓░░░▒▒░▒▒░▒▒ 
+ ▓░▒░▓░▒▒▓░▒▒░░▒▓▒▒▓▓▒░ ███▓█░░████████████░█▓████ ░▒░░░▒░▒▓▒░▒▓▒▒▒▓▒▓▒ 
+ ▓░▒░▓░▒▒▓░▒▒▒░▒▒░░▓▓░░██▒▓████▓█▒▓▒▓████░ ████▓███░▒▒▓▓▒▒▒▓░▒░▓▒░▒▒░▒▒ 
+ ▒▓▒░▒▒▓▒▓░▒▓▒▒▓▓░░▒▓░░░█▒▓██ ░▓░░███▓░▓▓██ █▓█░███░▒░░▓▒░▓▓░▒░▒▒▒▒▒░▓▒ 
+ ▒▒░░▓░▒▒▒░▒▒▒░░█░▒▒▒▓░██░██ ░█▒░░░░░▓░█▒██░░██░██ ░▓░░▒░▒▓▓▒▓░▒▒▒▓▒░▒▒ 
+ ▒▒░▒▓▒▒▒▓░░▒▒░░▓░░▒▒▒░▒▓██ ██░▓██▒█▒██▓▓██▓ ▒█░█▓░░▓░░▒░░▒▒░░░▓▒▒▒▒▒▓▒ 
+ ▒▓▒▒▓░▒▒▓░▒▒▒▒░▓░░▒▓░░█▒█░ █▓███▓█░███▓██▓█  █▓█░░▒▓▒░▒▓░▓▒░░░▓░░▒▒░▓░ 
+ ▒▒▒▒▓░▒▒▓░▒▒▒▒░▓▒▒▒▒░░██░  █▓▓░█░▓███░▓█▒███ ░███ ░▒░░▒▒▒▓▒▒▓▓▒▒▒▓▒▒▒▒ 
+ ▒░▒▒▓░▓▒▒▒▒▒▒░░▒▒░▒▒ █▓█  ██▒█░█░▓▓░█▒▓▓▓████ ███░░▒▒▓▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒ 
+ ░▒▒▒▓░▒▒▒░░▒▒▓▒▒░▒▒░ █░█░░██░█░█░█░█░▒█▒▓▒█▒  █▒█ ░▒▒▒░░▒▒▒░▓▒▒░░▒▒▒▓▓ 
+ ▓▓░▒▓░▒▒▒▒░▒▒▒░▒░▒▒░████░ ██░█░█░███░▓█░█▓██░██▓██░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓░▒▒▒ 
+ ▒▓░▒▓▒▒▒▒▓▒▒▓▓▒▓▒▓▒░██░█░░██░█░▓█░██▒▒█▒█▓██▒█ ███ ▒▒▒▒▒▒▒▒▓▒▒░▓▒▓▒▒▒░ 
+ ▒▓░▒▒░░░░▓░▒▓▓░░░▒▒░░███ ▒█▒░█░▓█░█▓▓▒█▒▒█▓█▒█░███ ░▓▒▒░░▒░▓▓▒░▒▒▒▓▒▒░ 
+ ▒▓░░▓██▓▒▒░▒▒▒▒▓▓▒░▒░░██ ██░██░██▓██▓▒█▒▒████ ░█▓░░▒▒▒▒▒▓▓░▓▒░░▓▒▒░░▒▒ 
+ ▒▓▒░▓░▓▓▒░░▒▒▒░▒▓▒░▒░░  ░██░██░█▒█▒█▓▓█▓▓▒████░░ ░░▒▒▒▒░▒▓░▓▒▓▓▓░▓██░▒ 
+ ▓▓▒▒▓░▓▓▓░▒▓▒▒▓░▓▒▒▒█▓▒░██░▓██░█░█▒█▒▓██▒██▓██ ░▒▒▒░▓░▓▒░▒░▓▓▒▓▒░▓▒█░▒ 
+ ▓▒░▓█░▓▓▓░▓▓░░░▒▒▒░░▓▒░ ██▒█▓█░█░█▓▓▓▓██░▒█▓██ ░▒░░▒▒░▓▓▓▒░▒▒▒▒▒▓▓▒█▒▒ 
+ ▒░▒▓█░▓▓▓░▓▓▒▓▒▓░░▒▓▒▓░ █▓██▒█░█▒▓▓▒█▓██░███▒██░░▒▓▓░░▓▒▒░▓▒▓░▒▒█▓▒██▓ 
+ ▓▓▓▒█▒░▓▒▒░▒▒▒▓▓▓█▒░░░ ███▓█░█░██▒█▓█████▒▓█▓███░░▓▒▓▒░░░▓▓▓▓▓░▒▓▓▒▓▓▒ 
+ ▓▒▓▓▓█░░██░░░░▓▒▒▓▒▓▒░▒█░██▓▓█░██▒█▒▓██▒█▒██▓█░██░▓░░▒██░▒▓▒▒▓▒▒▒▒▓█▓▒ 
+ ▓▒▓▓▓▒▓█▓░█▒▓█▒█▒▓▓▓█░█ █▓█▓▓█░██▒▒█▒██▓█░███▓█ █▒░█▓░▒▓▓▓▒░█░▓▓▓▓▓▓▓░ 
+ ▒█▓▒▓█▒█▓░█▒░▒░░▒▒▓▒▓▒█ █▓█▒▓█░▒██▒█▓██▒██▒█████ █░▓▓▒█▓▒░▒▓█▒█▒▒▓▒▓▓▒ 
+ ▒▓▒▓▓▒░██░█▒░██▒▒░▒▒▓▒░▓██▓███▓▓██▓▓█░█▓██░██████░░█▒░▓▒█▓▒▒▓▓█░█▒▒▓█▓ 
+ ▒▓▒▓░▒░▓▓▓█▓░░░▓██▒██░░█▓█▒░██▒▒██▓▓█▒██▒█▒▓█▓██░█░▓░░▒▓▓▓█▓▓█░░█▒▒▓▓▓ 
+░█▒▓▒█░█░█░██▓█▓░██░▒▓░░█▒█▒█▓█▒▓░█▓▓████▒██▓▓████ ░███▓▒█▒░░░▓░██▒░░█▓ 
+ █▒▓░██▓██▓███▒▓██░░▓░░█▓█▓▓█▓█▓█▒██▓▓█▓██▓█▓▒▓████░▒▒▒█░░█▒▒▓▒▓██░█▓█▒ 
+      {reset}""")
 
+dama_cristalizada = {
+    "nome":"Dama Cristalizada",
+    "vida": 200,
+    "exp": 200, 
+    "dano": 70,
+     
+    }
+
+def batalha_contra_dama(dama_cristalizada):
+    def exura():
+        if aventureiro["mana"] >= 10:
+            aventureiro["vida"] += 40
+            aventureiro["mana"] -= 10
+            print(f"Você se cura em {vermelho}+40 de vida!{reset}")
+            aventureiro["contadordecristal"] += 1
+        else:
+            print("Você não tem mana suficiente!")
+    
+    def exori():
+        if aventureiro["mana"] >= 25:
+            aventureiro["mana"] -= 25
+            dama_cristalizada["vida"] -= aventureiro["dano"]*2+5
+            print("você conjura um ataque devastador e brutal.")
+            aventureiro["contadordecristal"] += 1
+            
+        else:
+            print("Você não tem mana suficiente!")
+
+    def morenoaltomusculoso():
+        dama_cristalizada["vida"] = 0
+        print(f"{verdelima}{fundo}O {dama_cristalizada["nome"]} encara mozao e morre xD{reset}")
+        
+    def exori_kor():
+        if aventureiro["mana"] >= 10:
+            aventureiro["mana"] -= 10
+            dama_cristalizada["vida"] -= aventureiro["dano"]
+            aventureiro["vida"] += aventureiro["dano"]+10
+            lascou(f"A sua lâmina conjura um ataque vampírico que te cura em {aventureiro['dano']+10} ")
+            aventureiro["contadordecristal"] += 1
+        else:
+            print("Você não tem mana suficiente!")
+
+    def exori_con():
+        if aventureiro["mana"] >= 5:
+            aventureiro["mana"] -= 5
+            dama_cristalizada["vida"] -= aventureiro["dano"]
+            print(f"Você lança uma flecha mágica que causa {aventureiro['dano']} de dano no {dama_cristalizada['nome']}!")
+            print("Você ataca de longe e está seguro")
+            
+        else:
+            print("Você não tem mana suficiente!")
+
+    def utito_san(): 
+        if aventureiro["mana"] >= 10:
+            aventureiro["mana"] -= 10
+            if aventureiro["utito_san"] == False:
+                aventureiro["dano"] += 5
+                pos_batalha(f"{fundo}Voce sente agora poderes sagrados guiando sua espada. . . Seu poder aumentou{reset}")
+                aventureiro["utito_san"] = True
+            else:
+                print("Utito san ja está ativo")
+                aventureiro["mana"] += 10
+        else:
+            print("Você não tem mana suficiente!")
+
+    def exori_utamo():
+        if aventureiro["mana"] >= 20:
+            aventureiro["mana"] -= 20
+            dama_cristalizada["vida"] -= aventureiro["mana"]*2
+            mana_pos_batalha(f"Você lança uma esfera mágica feita de pura mana que causa {aventureiro['mana']*2} de dano no {dama_cristalizada['nome']}!")
+            print("Você sente que o próximo exori utamo vai ser menos eficaz")
+            aventureiro["contadordecristal"] += 1
+        else:
+            print("Você não tem mana suficiente!")
+
+    def exori_vis():
+        if aventureiro["mana"] >= 15:
+            aventureiro["mana"] -= 15
+            dama_cristalizada["vida"] -= 25
+            eletricidade(f"Você lança uma esfera elétrica que causa 25 de dano no {dama_cristalizada['nome']}!")
+            aventureiro["contadordecristal"] += 1
+        else:
+            print("Você não tem mana suficiente!")
+
+    def magia():
+
+        if not aventureiro_magias:
+            magia_linda(""">>> Magias possuem palavras mágicas.
+                     as diga e elas aconteceram!  <<<""")
+        else:
+            magias_formatadas = ', '.join(aventureiro_magias)
+            print(f"As {branco}palavras{reset} {Rosa_claro}{bold}{magias_formatadas}{reset} já ecoaram na sua cabeça")
+        
+            
+    def atacar():
+        dama_cristalizada["vida"] -= aventureiro["dano"]
+        print(f"{fundo}{branco}Você ataca e causa{reset}{laranja} {aventureiro['dano']}{reset}{fundo}{branco} de dano na  {reset}{fundobranco}{preto}{dama_cristalizada['nome']}{reset}!")
+        aventureiro["contadordecristal"] += 1
+        
+        
+        
+    ações_na_batalha = {
+    "exura": exura, #cura
+    "atacar": atacar,
+    "status": status,
+    "exori": exori, #Dano brutal com espada
+    "exori kor": exori_kor, #Ataque que cura
+    "exori con": exori_con, #Ataque a distancia
+    "exori utamo": exori_utamo, #Dano dependente da quantidade de mana
+    "utito san": utito_san, #resolver
+    "exori vis": exori_vis, #choque
+    "magia":magia,
+    "morenoaltomusculoso": morenoaltomusculoso, 
+}
+
+    while dama_cristalizada["vida"] > 0 and aventureiro["vida"] > 0:
+        ação = input(f"\n{fundo}{branco}O que você vai fazer? > [Magia / Atacar / Status] >> {reset}").strip().lower()
+        print("\n")
+        if aventureiro["contadordecristal"] > 5 and aventureiro["contadordecristal"] < 10:
+            print(f"{fundobranco}{underline}{preto}Você sente um leve desconforto, {reset}{fundo}{branco}você perde 5 pontos de dano. . .{reset}\n>")
+            aventureiro["dano"] -= 5
+        if aventureiro["sangramento"] == True:
+            print(f"{fundo}{branco}Seu sangue jorra lentamente.{reset} {fundo}{vermelho}A vida escapa com ele.{reset}")
+        if ação in ações_na_batalha:
+            ações_na_batalha[ação]()
+        else:
+            print("Você não consegue fazer isso!")
+        if aventureiro["contadordecristal"] <= 3:
+            input(f"{fundobranco}{underline}Ela apenas te observa. . .{reset}\n>")
+        elif aventureiro["contadordecristal"] == 4:
+            input(f"{fundobranco}Sofra.{reset}\n>")
+            aventureiro["vida"] -= 70
+            input(f"{fundobranco}{underline}{preto}Você inexplicavelmente perde {reset}{fundo}{vermelho}70 de vida. . .{reset}\n>")
+        elif aventureiro["contadordecristal"] == 5:
+            input(f"{fundobranco}{preto}Você percebe que as paredes da caverna são formadas por corpos cristalizados. Um calafrio percorre sua espinha ao perceber que sua pele também começa a endurecer em cristal.{reset}\n>")    
+            input(f"{fundobranco}{underline}{preto}Você perde {reset}{fundo}{branco}5 pontos de dano. . .{reset}\n>")    
+        elif aventureiro["contadordecristal"] == 8:
+            print("Delire.\n")
+            print(f"Sua visão se turva. O tempo se desfaz. Você afunda em um abismo de pesadelos sem forma.")
+            print(f"{fundobranco}{preto}Quando recobra os sentidos, um silêncio antinatural domina o ar.")
+            print(f"{fundobranco}{preto}Ao seu redor, espinhos de cristal crescem devagar, como se a própria terra o rejeitasse.")
+            print(f"{fundobranco}{preto}Você está cercado — e a prisão brilha com beleza cruel.")
+            
+batalha_contra_dama(dama_cristalizada)
+verificar_morte()
 exit()
