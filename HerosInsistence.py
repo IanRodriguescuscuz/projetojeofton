@@ -1262,31 +1262,44 @@ def batalha_contra_dama(dama_cristalizada):
     while dama_cristalizada["vida"] > 0 and aventureiro["vida"] > 0:
         ação = input(f"\n{fundo}{branco}O que você vai fazer? > [Magia / Atacar / Status] >> {reset}").strip().lower()
         print("\n")
-        if aventureiro["contadordecristal"] > 5 and aventureiro["contadordecristal"] < 10:
-            print(f"{fundobranco}{underline}{preto}Você sente um leve desconforto, {reset}{fundo}{branco}você perde 5 pontos de dano. . .{reset}\n>")
-            aventureiro["dano"] -= 5
+        if aventureiro["contadordecristal"] > 5 and aventureiro["contadordecristal"] < 11:
+            print(f"{fundobranco}{underline}{preto}Você sente um leve desconforto, {reset}{fundo}{vermelho}você perde 5 pontos de vida. . .{reset}\n>")
+            aventureiro["vida"] -= 5
         if aventureiro["sangramento"] == True:
             print(f"{fundo}{branco}Seu sangue jorra lentamente.{reset} {fundo}{vermelho}A vida escapa com ele.{reset}")
+            print(f"{fundo}{vermelho}Você perde 5 pontos de vida.{reset}\n>")
+            aventureiro["vida"] -= 5
         if ação in ações_na_batalha:
             ações_na_batalha[ação]()
         else:
             print("Você não consegue fazer isso!")
         if aventureiro["contadordecristal"] <= 3:
-            input(f"{fundobranco}{underline}Ela apenas te observa. . .{reset}\n>")
+            print(f"\n{fundobranco}{underline}Ela apenas te observa. . .{reset}\n")
         elif aventureiro["contadordecristal"] == 4:
-            input(f"{fundobranco}Sofra.{reset}\n>")
+            input(f"\n{fundobranco}Sofra.{reset}\n>")
             aventureiro["vida"] -= 70
-            input(f"{fundobranco}{underline}{preto}Você inexplicavelmente perde {reset}{fundo}{vermelho}70 de vida. . .{reset}\n>")
-        elif aventureiro["contadordecristal"] == 5:
+            aventureiro["contadordecristal"] += 1
+            print(f"\n{fundobranco}{underline}{preto}Você inexplicavelmente perde {reset}{fundo}{vermelho}70 de vida. . .{reset}\n")
+        elif aventureiro["contadordecristal"] > 4 and aventureiro["contadordecristal"] < 7:
+            print(f"\n{fundobranco}{underline}Ela apenas te observa. . .{reset}\n")
+        elif aventureiro["contadordecristal"] == 7:
             input(f"{fundobranco}{preto}Você percebe que as paredes da caverna são formadas por corpos cristalizados. Um calafrio percorre sua espinha ao perceber que sua pele também começa a endurecer em cristal.{reset}\n>")    
-            input(f"{fundobranco}{underline}{preto}Você perde {reset}{fundo}{branco}5 pontos de dano. . .{reset}\n>")    
-        elif aventureiro["contadordecristal"] == 8:
-            print("Delire.\n")
-            print(f"Sua visão se turva. O tempo se desfaz. Você afunda em um abismo de pesadelos sem forma.")
-            print(f"{fundobranco}{preto}Quando recobra os sentidos, um silêncio antinatural domina o ar.")
-            print(f"{fundobranco}{preto}Ao seu redor, espinhos de cristal crescem devagar, como se a própria terra o rejeitasse.")
-            print(f"{fundobranco}{preto}Você está cercado — e a prisão brilha com beleza cruel.")
-            
+            print(f"{fundo}{vermelho}Você perde 5 pontos de vida. . .{reset}\n>")
+            aventureiro["contadordecristal"] += 1    
+        elif aventureiro["contadordecristal"] == 10:
+            input(f"{fundobranco}Delire..{reset}\n>")
+            input(f"{fundobranco}{preto}Sua visão se turva. O tempo se desfaz. Você afunda em um abismo de pesadelos sem forma.{reset}\n>")
+            input(f"{fundobranco}{preto}Quando recobra os sentidos, um silêncio antinatural domina o ar.{reset}\n>")
+            input(f"{fundobranco}{preto}Ao seu redor, espinhos de cristal crescem- devagar, como se a própria terra o rejeitasse.{reset}\n>")
+            input(f"{fundobranco}{preto}Você está cercado — e a prisão brilha com beleza cruel.{reset}\n>")
+            resposta =input(f"{fundobranco}{preto}Você está preso em uma armadilha de espinhos cristalinos, prontos para perfurar sua carne.\nO que deseja fazer?{reset}\n>")
+            if resposta == "utani hur":
+                input("fopdase")
+            else:
+                print(f"{fundobranco}{preto}Estilhaços cortam sua carne. O som do vidro rasgando ossos ecoa no vazio.{reset} {fundo}{vermelho}Você está sangrando...{reset}")
+                print(f"{fundo}{vermelho}Você perde 30 pontos de vida. . .{reset}\n>")
+                aventureiro["sangramento"] = True
+         #elif       
 batalha_contra_dama(dama_cristalizada)
 verificar_morte()
 exit()
