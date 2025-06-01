@@ -99,9 +99,9 @@ ______________/ \\__;\___/\;_/\\________________________________
 YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYw
 """)
     print("\033[1;37m") 
-    print("                  \033[1;34m---------------------------------------\033[1;37m")
-    print("                |     escreva \"\033[1;33maventura\033[1;37m\" para começar      |")
-    print("                  \033[1;34m---------------------------------------\033[0m\n")
+    print("                  \033[1;34m----------------------------------------------\033[1;37m")
+    print(f"                {branco}|     escreva \"{amarelo}aventura{reset}{branco}\" ou \"{amarelo}{bold}ajuda{reset}{branco}\" para começar  |{reset}")
+    print("                  \033[1;34m----------------------------------------------\033[0m\n")
     print("                     \033[1;35mhero's insistence")
     print("                          ~ O Rpg\033[0m")
 
@@ -111,9 +111,27 @@ def quer_dizer_sim(resposta):
         "sim", "s", "aventura", "vamo", "vamos", "claro", "bora", "beber", "comer", "dale", "daledele", "daledeledeledoly", "continuar", "pegar", "ir", "entrar", "cogumelo", "sm", "simm","go","sin", "","status"
     ]
     
-def perguntar_se_quer_jogar():
-    resposta = entrada_pergunta("\n\n                Vamos entrar nesta caverna? > ").strip().lower()
-    return quer_dizer_sim(resposta)
+def verificar_ajuda_antes_de_jogar():
+    resposta = entrada_pergunta(f"\n\n{branco}                Vamos entrar nesta caverna? > {reset}").strip().lower()
+
+    if resposta == "ajuda":
+        print(f"""
+{azul}                ------------------------------------ {amarelo}COMO JOGAR{azul} ------------------------------------{reset}
+{verde}
+                - Este é um RPG de texto, descrições apareceram!
+                - Você poderá encontrar inimigos ou situações que podem colocar a sua aventura em risco!
+                - Escreva ou aperte ENTER para interagir com as situações, cada uma necessita de uma reacão diferente.
+                - Responda com atenção, Neste jogo você enfrenterá eventos que aparecerão aleatóriamente a cada sala.
+                - Dicas e segredos podem aparecer no caminho...
+                - Magias possuem palavras que ao digitar em batalha efeitos acontecem, fique atento pois elas aparecerão ao decorrer da aventura.
+{azul}                --------------------------------------------------------------------------------------------{reset}
+        """)
+        resposta_ajuda = entrada_pergunta(f"\n{branco}                Vamos começar? ({verde}sim{branco}/{vermelho}não{branco}) > {reset}").strip().lower()
+        return quer_dizer_sim(resposta_ajuda)
+    else:
+        return quer_dizer_sim(resposta)
+
+
 
 
 def perguntar_nome():
@@ -145,7 +163,7 @@ def status():
     ----------------
     """)
 
-if perguntar_se_quer_jogar():
+if verificar_ajuda_antes_de_jogar():
     nomedoaventureiro = perguntar_nome()
     aventureiro = {"nome": nomedoaventureiro,
                "dano": 10,
@@ -322,7 +340,7 @@ def batalha(npc):
         if aventureiro["mana"] >= 25:
             aventureiro["mana"] -= 25
             npc["vida"] -= aventureiro["dano"]*2+5
-            print("você conjura um ataque devastador e brutal.")
+            print(f"{vermelho}você conjura um ataque devastador e brutal.{reset}")
             if npc["vida"] > 0:
                 aventureiro["vida"] -= npc["dano"]
                 cuidado(f"O {npc['nome']} está gravimente ferido, mas revida e causa {npc['dano']} de dano!")
@@ -1082,6 +1100,16 @@ def evento_na_caverna():
 
 evento_na_caverna()
 
+input(
+    f"{fundobranco}{preto}\033[4mVocê segue o fluxo tortuoso da caverna e encontra uma fenda por onde a luz escapa.{reset}\n"
+    f"{fundobranco}{preto}\033[4mAo atravessá-la, por um instante, sente como se tivesse saído — a claridade confunde seus sentidos.{reset}\n"
+    f"{fundobranco}{preto}\033[4mMas então seus olhos se ajustam... e você percebe.{reset}\n"
+    f"{fundobranco}{preto}\033[4mEstá em um cômodo colossal, inteiramente feito de cristais brancos, como quartzo vivo.{reset}\n"
+    f"{fundobranco}{preto}\033[4mNo centro, uma figura feminina o observa — enigmática, imóvel.{reset}\n"
+    f"{fundobranco}{preto}\033[4m>>>>{reset}\n "
+)
+
+
 narração_final_pergunta(f"{fundobranco}Sofra,{reset}")
 narração_final_pergunta(f"{fundobranco}Treine,{reset}")
 narração_final_pergunta(f"{fundobranco}Melhore,{reset}")
@@ -1089,11 +1117,22 @@ narração_final_pergunta(f"{fundobranco}Busque,{reset}")
 narração_final_pergunta(f"{fundobranco}E então...{reset}")
 narração_final_pergunta(f"{fundobranco}Me enfrente.{reset}")
 input("")
+#a narração abaixo vai ser reutilizada em futuras atualizações
 #narração_final_pergunta(f"{fundo}Me sirva ,{reset}")
 #narração_final_pergunta(f"{fundo}Faça tudo oque eu pedir,{reset}")
 #narração_final_pergunta(f"{fundo}Me chame de rei, de mestre, de senhor.{reset}")
 #narração_final_pergunta(f"{fundo}e quem sabe assim,{reset}")
 #narração_final_pergunta(f"{fundo}Eu te permita viver.{reset}")
+
+def fim_do_jogo():
+    print(f"{fundobranco}{preto}{underline}Com um último golpe, o corpo da Dama Cristalizada começa a rachar silenciosamente...{reset}")
+    print(f"{fundobranco}{preto}Ela não grita. Apenas encara você — com algo entre alívio e tristeza — antes de se despedaçar em pó cintilante.{reset}")
+    print(f"{fundobranco}{preto}Os cristais ao redor tremem, perdem o brilho, e começam a se desfazer lentamente, como se o tempo finalmente tivesse retomado seu curso.{reset}")
+    print(f"{fundobranco}{preto}Vultos humanos, antes presos dentro das paredes de cristal, evaporam em luz suave. Suas almas, enfim, livres.{reset}\n")
+    print(f"{fundobranco}{preto}No fundo da sala, onde antes havia apenas uma parede maciça, o vazio toma forma.{reset}")
+    print(f"{fundobranco}{preto}{underline}Uma passagem se revela entre os fragmentos que caem... a saída está diante de você.{reset}\n")
+    input("")
+    input(f"{fundo}fim da aventura,{laranja}por hoje...{reset}")
 
 
 input(f"\n{fundo}{branco}{underline}A sua ultima batalha acaba de {vermelho}começar.{reset}\n{fundobranco}{preto}>>{reset}")
@@ -1146,7 +1185,7 @@ print(f"""{branco}
 
 dama_cristalizada = {
     "nome":"Dama Cristalizada",
-    "vida": 200,
+    "vida": 250,
     "exp": 200, 
     "dano": 70,
      
@@ -1262,12 +1301,16 @@ def batalha_contra_dama(dama_cristalizada):
     while dama_cristalizada["vida"] > 0 and aventureiro["vida"] > 0:
         ação = input(f"\n{fundo}{branco}O que você vai fazer? > [Magia / Atacar / Status] >> {reset}").strip().lower()
         print("\n")
-        if aventureiro["contadordecristal"] > 5 and aventureiro["contadordecristal"] < 12:
+        if aventureiro["contadordecristal"] > 6 and aventureiro["contadordecristal"] < 12:
             print(f"{fundobranco}{underline}{preto}Você sente um leve desconforto, {reset}{fundo}{vermelho}você perde 5 pontos de vida. . .{reset}\n")
             aventureiro["vida"] -= 5
         elif aventureiro["contadordecristal"] > 11 and aventureiro["contadordecristal"] < 16:
-            print(f"{fundobranco}{underline}{preto}Seus musculos já estão se cristalizando e isso Doi Demais. {reset}{fundo}{vermelho}você perde 15 pontos de vida. . .{reset}\n")
+            print(f"{fundobranco}{underline}{preto}Seus musculos já estão se cristalizando e isso {fundo}{branco}Doi Demais. {reset}{fundo}{vermelho}você perde 15 pontos de vida. . .{reset}\n")
             aventureiro["vida"] -= 15
+        elif aventureiro["contadordecristal"] > 16:
+            print(f"{fundobranco}{preto}{underline}Você mal sente a dor agora — só o frio do cristal tomando o que restava de você.{reset}")
+            print(f"{fundo}{vermelho}Você perde 25 pontos de vida. . .{reset}\n")
+            aventureiro["vida"] -= 25
         if aventureiro["sangramento"] == True:
             print(f"{fundo}{branco}Seu sangue jorra lentamente.{reset} {fundo}{vermelho}A vida escapa com ele.{reset}\n")
             aventureiro["vida"] -= 5
@@ -1286,6 +1329,8 @@ def batalha_contra_dama(dama_cristalizada):
             print(f"\n{fundobranco}{preto}{underline}Ela apenas te observa. . .{reset}\n")
         elif aventureiro["contadordecristal"] == 7:
             input(f"\n{fundobranco}{preto}Você percebe que as paredes da caverna são formadas por corpos cristalizados. Um calafrio percorre sua espinha ao perceber que sua pele também começa a endurecer em cristal.{reset}\n{fundobranco}{preto}>>{reset}") 
+            print(f"{fundobranco}{underline}{preto}Você sente um leve desconforto, {reset}{fundo}{vermelho}você perde 5 pontos de vida. . .{reset}\n")
+            aventureiro["vida"] -= 5
             aventureiro["contadordecristal"] += 1
         elif aventureiro["contadordecristal"] == 9:
             input(f"\n{fundobranco}{preto}Delire.{reset}\n{fundo}{branco}>>{reset}")
@@ -1312,7 +1357,15 @@ def batalha_contra_dama(dama_cristalizada):
             if aventureiro["sangramento"] == True:
                 print(f"{fundo}{branco}suas feridas são cristalizadas e o sangramento cede.{reset}")
                 aventureiro["sangramento"] = False
-            
+        elif aventureiro["contadordecristal"] == 16:
+            print(f"\n{fundo}{branco}{underline}Há mais cristal no seu corpo do que carne.{reset}")
+            print(f"{fundo}{vermelho}Você perde 25 pontos de vida. . .{reset}\n")
+            aventureiro["vida"] -= 25
+
+            aventureiro["contadordecristal"] += 1
+        elif aventureiro["contadordecristal"] > 16:
+            print(f"\n{fundobranco}{preto}{underline}Ela apenas te observa. . . e sorri.{reset}\n")
 batalha_contra_dama(dama_cristalizada)
 verificar_morte()
+fim_do_jogo()
 exit()
