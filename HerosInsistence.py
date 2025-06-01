@@ -403,8 +403,8 @@ def batalha(npc):
             print("Você não tem mana suficiente!")
 
     def exori_vis():
-        if aventureiro["mana"] >= 15:
-            aventureiro["mana"] -= 15
+        if aventureiro["mana"] >= 10:
+            aventureiro["mana"] -= 10
             npc["vida"] -= 25
             eletricidade(f"Você lança uma esfera elétrica que causa 25 de dano no {npc['nome']}!")
             if npc["vida"] <= 0:
@@ -1185,7 +1185,7 @@ print(f"""{branco}
 
 dama_cristalizada = {
     "nome":"Dama Cristalizada",
-    "vida": 250,
+    "vida": 225,
     "exp": 200, 
     "dano": 70,
      
@@ -1259,8 +1259,8 @@ def batalha_contra_dama(dama_cristalizada):
             print("Você não tem mana suficiente!")
 
     def exori_vis():
-        if aventureiro["mana"] >= 15:
-            aventureiro["mana"] -= 15
+        if aventureiro["mana"] >= 10:
+            aventureiro["mana"] -= 10
             dama_cristalizada["vida"] -= 25
             eletricidade(f"Você lança uma esfera elétrica que causa 25 de dano na {dama_cristalizada['nome']}!")
             aventureiro["contadordecristal"] += 1
