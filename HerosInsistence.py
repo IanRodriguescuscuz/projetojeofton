@@ -280,7 +280,7 @@ def aprender_magia():
 
     magia = lista_de_magias.pop(magia_escolhida) 
     aventureiro_magias.append(magia)
-    if magia == ">utani hur<":
+    if magia == "utani hur":
         magia_linda_cheguei(f"A palavra {branco}{bold}{magia}{reset} {rosa_medio}ecoa em seus pensamentos... Talvez sirva de algo em armadilhas...{reset}")
     else:
         magia_linda_cheguei(f"A palavra {branco}{bold}{magia}{reset} {rosa_medio}ecoa em seus pensamentos... Talvez sirva em alguma batalha...{reset}")
