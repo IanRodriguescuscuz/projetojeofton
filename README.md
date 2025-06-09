@@ -6,3 +6,5 @@
 ---
 
 Projeto da disciplina de programação de computadores. Desenvolvido com dedicação por: João Pedro Silva Nobre e Ian Rodrigues Simões Silva
+---
+Link do video explicativo: https://youtu.be/mCpeAJpFqxM
