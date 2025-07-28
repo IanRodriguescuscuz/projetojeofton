@@ -1,5 +1,6 @@
 # Hero's Insistance 🗡️
 
+![Banner do Jogo](./assets/heros-insistance-logo.png)
 
 **Hero's Insistance** é um jogo de RPG de turno desenvolvido em Python para rodar diretamente no terminal. Com elementos de narrativa interativa, batalhas estratégicas e progressão de personagem, este projeto visa proporcionar uma experiência envolvente mesmo sem interface gráfica.
 
